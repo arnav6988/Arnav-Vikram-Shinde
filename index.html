@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arnav Vikram Shinde — Mechanical &amp; Aerospace Engineering</title>
+<meta name="description" content="Portfolio of Arnav Vikram Shinde — precision engineering, CAD/CAE, and simulation work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:   #0A1930;
+    --navy:        #0F2340;
+    --navy-panel:  #12294B;
+    --line-faint:  #22436E;
+    --line:        #2E5687;
+    --paper:       #E9EEF3;
+    --paper-dim:   #A9BCD1;
+    --paper-mute:  #7591AC;
+    --amber:       #F2A93B;
+    --amber-dim:   #C98A2C;
+    --max-w: 980px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--navy-deep);
+    background-image:
+      repeating-linear-gradient(0deg, var(--line-faint) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(90deg, var(--line-faint) 0 1px, transparent 1px 88px);
+    background-attachment:fixed;
+    color:var(--paper);
+    font-family:'Archivo', -apple-system, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--amber); color:var(--navy-deep);}
+
+  a{color:var(--amber); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{max-width:var(--max-w); margin:0 auto; padding:0 28px;}
+
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.01em;}
+
+  /* ---------- Skip link ---------- */
+  .skip-link{
+    position:absolute; left:-999px; top:0; background:var(--amber); color:var(--navy-deep);
+    padding:10px 16px; z-index:100; font-family:'IBM Plex Mono',monospace; font-size:13px;
+  }
+  .skip-link:focus{left:12px; top:12px;}
+
+  /* ---------- Title block header ---------- */
+  header.titleblock{
+    border-bottom:2px solid var(--line);
+    padding:56px 0 0 0;
+  }
+  .tb-top{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap;
+    gap:24px; padding-bottom:36px;
+  }
+  .tb-name{
+    font-size:clamp(34px, 5.6vw, 58px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0 0 8px 0;
+    color:var(--paper);
+  }
+  .tb-role{
+    font-size:17px;
+    color:var(--paper-dim);
+    max-width:46ch;
+    margin:0;
+  }
+  .tb-nav{
+    display:flex; gap:22px; flex-wrap:wrap;
+  }
+  .tb-nav a{
+    color:var(--paper-dim); font-size:13px; text-transform:none;
+  }
+  .tb-nav a:hover{color:var(--amber);}
+
+  /* the drawing-title-block strip, like the bottom-right block of a real technical drawing */
+  .tb-strip{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:1px solid var(--line);
+  }
+  .tb-cell{
+    padding:14px 20px;
+    border-right:1px solid var(--line-faint);
+  }
+  .tb-cell:last-child{border-right:none;}
+  .tb-cell .k{
+    display:block; font-size:11px; color:var(--paper-mute); margin-bottom:4px;
+  }
+  .tb-cell .v{
+    display:block; font-size:13.5px; color:var(--paper);
+  }
+
+  @media (max-width:640px){
+    .tb-strip{grid-template-columns:repeat(2, 1fr);}
+    .tb-cell:nth-child(2){border-right:none;}
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:64px 0;}
+  section + section{border-top:1px solid var(--line-faint);}
+
+  .sec-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:34px;
+  }
+  .sec-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--amber);
+    border:1px solid var(--amber-dim);
+    padding:2px 8px;
+    flex-shrink:0;
+  }
+  .sec-title{
+    font-size:26px; font-weight:600; margin:0; color:var(--paper);
+  }
+
+  /* dimension-line divider, styled like an engineering-drawing dimension callout */
+  .dim{
+    display:flex; align-items:center; gap:10px; margin:52px 0;
+    color:var(--paper-mute); font-size:12px;
+  }
+  .dim svg{flex-shrink:0;}
+  .dim-line{flex:1; height:1px; background:var(--line);}
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px;
+  }
+  .about-copy p{
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:17px;
+    color:var(--paper);
+    max-width:60ch;
+  }
+  .about-copy p + p{margin-top:16px;}
+
+  .spec-list{list-style:none; margin:0; padding:0; border:1px solid var(--line-faint);}
+  .spec-list li{
+    display:flex; justify-content:space-between; gap:16px;
+    padding:11px 16px; font-size:13px;
+    border-bottom:1px solid var(--line-faint);
+  }
+  .spec-list li:last-child{border-bottom:none;}
+  .spec-list .k{color:var(--paper-mute);}
+  .spec-list .v{color:var(--paper); text-align:right; font-family:'IBM Plex Mono', monospace; font-size:12.5px;}
+
+  @media (max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Projects ---------- */
+  .project{
+    border:1px solid var(--line);
+    background:var(--navy-panel);
+    margin-bottom:22px;
+  }
+  .project-head{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+    padding:22px 24px 16px 24px;
+    flex-wrap:wrap;
+  }
+  .project-drawno{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--amber);
+    margin:0 0 6px 0;
+  }
+  .project-title{
+    font-size:20px; font-weight:600; margin:0; color:var(--paper);
+  }
+  .project-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-mute);
+    border:1px solid var(--line); padding:4px 10px; white-space:nowrap; align-self:flex-start;
+  }
+  .project-body{
+    padding:0 24px 24px 24px;
+  }
+  .project-body p{
+    color:var(--paper-dim); font-size:14.5px; max-width:72ch; margin:0 0 14px 0;
+  }
+  .project-tools{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;
+  }
+  .project-tools span{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper-dim);
+    background:var(--navy); border:1px solid var(--line-faint); padding:3px 9px;
+  }
+  .project-gallery{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    gap:8px;
+  }
+  .project-gallery img{
+    width:100%; aspect-ratio:4/3; object-fit:cover; display:block;
+    border:1px solid var(--line-faint); filter:saturate(0.9);
+  }
+  .project-empty{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--paper-mute);
+    border:1px dashed var(--line); padding:16px; text-align:center;
+  }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+    gap:1px; background:var(--line-faint); border:1px solid var(--line-faint);
+  }
+  .skill-cell{
+    background:var(--navy-panel); padding:20px 22px;
+  }
+  .skill-cell h3{
+    font-size:13px; margin:0 0 10px 0; color:var(--amber);
+    font-family:'IBM Plex Mono', monospace; font-weight:500;
+  }
+  .skill-cell ul{margin:0; padding:0; list-style:none;}
+  .skill-cell li{
+    font-size:13.5px; color:var(--paper-dim); padding:3px 0;
+  }
+
+  /* ---------- Contact / footer ---------- */
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:22px;
+  }
+  .btn{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:13px;
+    padding:11px 20px; border:1px solid var(--amber-dim); color:var(--amber);
+  }
+  .btn:hover{background:var(--amber); color:var(--navy-deep); text-decoration:none;}
+  .btn.ghost{border-color:var(--line); color:var(--paper-dim);}
+  .btn.ghost:hover{background:var(--navy-panel); color:var(--paper); border-color:var(--line);}
+
+  footer{
+    padding:32px 0 48px 0; border-top:1px solid var(--line-faint);
+    font-size:12px; color:var(--paper-mute); font-family:'IBM Plex Mono', monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="titleblock">
+  <div class="wrap">
+    <div class="tb-top">
+      <div>
+        <h1 class="tb-name">Arnav Vikram Shinde</h1>
+        <p class="tb-role">Mechanical &amp; aerospace engineer — precision engineering, CAD/CAE simulation, and machine design.</p>
+      </div>
+      <nav class="tb-nav mono" aria-label="Section navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="tb-strip mono">
+      <div class="tb-cell"><span class="k">Discipline</span><span class="v">Mechanical / Aerospace</span></div>
+      <div class="tb-cell"><span class="k">Focus</span><span class="v">Simulation &amp; precision design</span></div>
+      <div class="tb-cell"><span class="k">Tools</span><span class="v">ANSYS · SolidEdge · Creo</span></div>
+      <div class="tb-cell"><span class="k">Based in</span><span class="v">Bhopal, India</span></div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num mono">01</span>
+        <h2 class="sec-title">About</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>I work across CAD modeling, CAE/FEA analysis, and technical documentation for mechanical and aerospace systems — building things and then proving, with simulation and structured reporting, that they hold up.</p>
+          <p>My interests sit at the intersection of simulation, machine design, and precision engineering: kinematic modeling of custom machinery, structural and modal analysis of optical and satellite hardware, and ruggedized enclosure design to military environmental standards.</p>
+        </div>
+        <ul class="spec-list mono">
+          <li><span class="k">CAD</span><span class="v">SolidEdge, Creo</span></li>
+          <li><span class="k">CAE / FEA</span><span class="v">ANSYS</span></li>
+          <li><span class="k">Dynamics</span><span class="v">MSC ADAMS</span></li>
+          <li><span class="k">Documentation</span><span class="v">LaTeX, Word</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num mono">02</span>
+        <h2 class="sec-title">Projects</h2>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <p class="project-drawno">DRW-01 · CMP-SIM</p>
+            <h3 class="project-title">CMP lens polishing machine — kinematic simulator</h3>
+          </div>
+          <span class="project-tag">Avinya MilTech internship</span>
+        </div>
+        <div class="project-body">
+          <p>A chemical-mechanical polishing (CMP) simulator for an oscillating overarm glass polishing machine. Modeled the oscillation arm as a four-bar mechanism to eliminate the quick-return effect, derived the top disc's induced RPM from combined arm oscillation and base disc motion, calculated disc profile geometry, and applied Preston's equation to predict material removal for production planning. Also built a predictive re-flattening algorithm to extend disc life, using Creo and MSC ADAMS, plus bearing selection to optimize machine life. Documented in a 23-page interactive LaTeX/PDF manual covering kinematics, contact mechanics, and surface topography.</p>
+          <div class="project-tools mono">
+            <span>Four-bar mechanism design</span>
+            <span>Preston's equation</span>
+            <span>Creo</span>
+            <span>MSC ADAMS</span>
+            <span>LaTeX</span>
+          </div>
+          <!--
+            Add photos for this project by placing image files inside the "Project 1" folder
+            of the repository, then reference them below like:
+            <img src="Project 1/photo1.jpg" alt="Describe what the photo shows">
+          -->
+          <div class="project-gallery" id="project1-gallery">
+            <div class="project-empty">Photos go here — see the "Project 1" folder</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <p class="project-drawno">DRW-02 · MIRROR-MNT</p>
+            <h3 class="project-title">Mirror mount assembly — structural &amp; modal analysis</h3>
+          </div>
+          <span class="project-tag">CAE / ANSYS</span>
+        </div>
+        <div class="project-body">
+          <p>Structural analysis report for a mirror mount assembly, built from ANSYS simulation data. Includes annotated modal analysis results and an 80-mode mass participation table combining translational and rotational data, formatted in landscape orientation with auto-updating tables of contents and figures.</p>
+          <div class="project-tools mono">
+            <span>ANSYS</span>
+            <span>Modal analysis</span>
+            <span>Mass participation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <p class="project-drawno">DRW-03 · ACS-NANOSAT</p>
+            <h3 class="project-title">Reaction wheel attitude control system — nanosatellite</h3>
+          </div>
+          <span class="project-tag">Aerospace</span>
+        </div>
+        <div class="project-body">
+          <p>Design work on a reaction wheel attitude control system (ACS) for a nanosatellite, contributing to the vehicle's pointing and stabilization hardware.</p>
+          <div class="project-tools mono">
+            <span>ACS design</span>
+            <span>Nanosatellite</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <p class="project-drawno">DRW-04 · ENCL-MIL810G</p>
+            <h3 class="project-title">Ruggedized enclosure — NVIDIA Jetson Orin Nano</h3>
+          </div>
+          <span class="project-tag">Mechanical design</span>
+        </div>
+        <div class="project-body">
+          <p>A MIL-STD-810G compliant ruggedized enclosure for the NVIDIA Jetson Orin Nano, built in AL6061-T6 aluminum over a 10-day design cycle. Covers IP68 waterproofing, shock compliance, and multi-sensor window design for both optical and RF-transparent apertures, with planned ANSYS analyses across structural, thermal, modal, and harmonic domains.</p>
+          <div class="project-tools mono">
+            <span>MIL-STD-810G</span>
+            <span>AL6061-T6</span>
+            <span>IP68</span>
+            <span>ANSYS (planned)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="internship">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num mono">03</span>
+        <h2 class="sec-title">Internship — Avinya MilTech</h2>
+      </div>
+      <div class="about-copy">
+        <p>Two-month internship at Avinya MilTech, Sinhasa IT Park, Indore, spanning precision drafting and modeling of optical and mechanical components, satellite assembly CAE analysis (modal, random vibration, and thermal analysis in ANSYS), a military-grade AI camera casing, and the CMP lens polishing machine kinematic simulator above. Work was documented in a full internship training report and presented in a 15-slide seminar presentation.</p>
+      </div>
+
+      <div class="dim mono" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8 L14 8 M2 8 L5 5 M2 8 L5 11 M14 8 L11 5 M14 8 L11 11" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+        <span class="dim-line"></span>
+        <span>2 months</span>
+        <span class="dim-line"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num mono">04</span>
+        <h2 class="sec-title">Skills &amp; tools</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-cell">
+          <h3>CAD / modeling</h3>
+          <ul>
+            <li>SolidEdge (DRW, 3D modeling)</li>
+            <li>Creo</li>
+          </ul>
+        </div>
+        <div class="skill-cell">
+          <h3>CAE / simulation</h3>
+          <ul>
+            <li>ANSYS — structural, modal, thermal, harmonic</li>
+            <li>MSC ADAMS — dynamics</li>
+            <li>Random vibration analysis</li>
+          </ul>
+        </div>
+        <div class="skill-cell">
+          <h3>Analysis &amp; theory</h3>
+          <ul>
+            <li>Kinematics &amp; mechanism design</li>
+            <li>Contact mechanics</li>
+            <li>Preston's equation / MRR modeling</li>
+          </ul>
+        </div>
+        <div class="skill-cell">
+          <h3>Documentation</h3>
+          <ul>
+            <li>LaTeX (XeLaTeX, TikZ, pgfplots)</li>
+            <li>Technical reporting (Word)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num mono">05</span>
+        <h2 class="sec-title">Contact</h2>
+      </div>
+      <div class="about-copy">
+        <p>Open to internship, research, and collaboration opportunities in mechanical and aerospace engineering.</p>
+      </div>
+      <div class="contact-row">
+        <a class="btn" href="Arnav_Vikram_Shinde_Resume.pdf">Download resume</a>
+        <a class="btn ghost" href="mailto:youremail@example.com">Email me</a>
+        <a class="btn ghost" href="https://github.com/arnav6988">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="width:100%; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Arnav Vikram Shinde</span>
+    <span>Rev A</span>
+  </div>
+</footer>
+
+</body>
+</html>
