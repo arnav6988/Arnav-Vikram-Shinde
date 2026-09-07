@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arnav Vikram Shinde — Designing, Analysis &amp; Simulation</title>
 <meta name="description" content="Portfolio of Arnav Vikram Shinde — mechanical engineering, CAE/FEA, and simulation work.">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <style>
   :root{
     --bg:        #0A0C0F;
@@ -265,22 +266,40 @@
   .project-card:hover{transform:translateY(-4px); border-color:var(--accent);}
   .project-title{font-size:16.5px; font-weight:600; margin:0 0 10px 0;}
   .project-desc{font-size:14px; color:var(--text-dim); margin:0 0 16px 0;}
-  .project-tools{display:flex; flex-wrap:wrap; gap:8px;}
+  .project-tools{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
   .project-tools span{
     font-size:11.5px; font-family:var(--font-mono); color:var(--text-mute);
     border:1px solid var(--border); border-radius:4px; padding:3px 8px;
   }
+  .project-links{display:flex; flex-wrap:wrap; gap:10px;}
+  .project-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-family:var(--font-mono); color:var(--text-dim);
+    border:1px solid var(--border); border-radius:var(--radius); padding:7px 12px;
+    text-decoration:none; transition:border-color .2s ease, color .2s ease;
+  }
+  .project-link:hover{color:var(--accent); border-color:var(--accent);}
+  .project-link svg{width:13px; height:13px; flex-shrink:0;}
 
-  .tile-grid{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px;
+  .project-card.featured{
+    grid-column:1 / -1;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:28px; align-items:start;
   }
-  .empty-tile{
-    aspect-ratio:4/3; border:1px dashed var(--border); border-radius:var(--radius);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; color:var(--text-mute); background:var(--bg-alt); text-align:center; padding:12px;
+  .media-stack{display:flex; flex-direction:column; gap:14px;}
+  .media-label{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-mute);
+    text-transform:uppercase; letter-spacing:0.06em; margin:0 0 6px 0;
   }
-  .empty-tile .slot{font-size:13px; font-weight:500; color:var(--text-dim);}
-  .empty-tile span.note{font-size:11.5px;}
+  .project-model, .project-video{
+    width:100%; aspect-ratio:4/3; background:var(--bg-raised);
+    border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
+  }
+  .project-card model-viewer{width:100%; height:100%;}
+  .project-video video{width:100%; height:100%; object-fit:cover; display:block;}
+  .project-card .project-video{margin-top:16px;}
+  @media (max-width:720px){
+    .project-card.featured{grid-template-columns:1fr;}
+  }
 
   /* ============ Approach ============ */
   .approach-sub{
@@ -493,89 +512,87 @@
       <h2 class="section-title reveal">Portfolio</h2>
 
       <div class="project-grid reveal">
+
+        <div class="project-card featured">
+          <div>
+            <h3 class="project-title">Reaction Wheel Attitude Control System — Nanosatellite</h3>
+            <p class="project-desc">Designed and sized a reaction-wheel-based Attitude Control System (ACS) for a nanosatellite platform, covering the mechanical/CAD layout of the wheel assembly alongside the supporting momentum and control analysis. Full write-up in the linked project report.</p>
+            <div class="project-tools">
+              <span>CAD</span><span>Attitude Control</span><span>Nanosatellite</span><span>Mechanical Design</span>
+            </div>
+            <div class="project-links">
+              <a class="project-link" href="reports/Minor%20Project%20Report%20(RWACS).pdf" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Report
+              </a>
+            </div>
+          </div>
+          <div class="media-stack">
+            <div>
+              <p class="media-label">3D Model</p>
+              <div class="project-model">
+                <model-viewer src="models/reaction-wheel.glb" alt="Reaction Wheel Attitude Control System 3D model" camera-controls disable-zoom auto-rotate shadow-intensity="0.6"></model-viewer>
+              </div>
+            </div>
+            <div>
+              <p class="media-label">Test Video</p>
+              <div class="project-video">
+                <video src="videos/three_motors.mp4" autoplay muted loop playsinline controls></video>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="project-card">
           <h3 class="project-title">CMP Lens Polishing Simulator</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
+          <p class="project-desc">Physics-based kinematic simulator for a CMP lens-polishing machine — models the oscillating arm as a four-bar mechanism, derives induced disc RPM and profile geometry, and applies Preston's equation for material-removal prediction.</p>
+          <div class="project-tools">
+            <span>HTML/JS</span><span>Kinematics</span><span>Preston's Equation</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link" href="cmp-simulator.html" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Launch Simulator
+            </a>
+          </div>
         </div>
+
         <div class="project-card">
           <h3 class="project-title">Optomechanical Mirror Assembly</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
+          <p class="project-desc">Structural analysis of a mirror mount assembly using ANSYS FEA, documented in a full structural analysis report built from the simulation data.</p>
+          <div class="project-tools">
+            <span>ANSYS</span><span>Static Structural</span><span>Optomechanics</span>
+          </div>
+          <div class="project-links">
+            <a class="project-link" href="reports/final%20mirror%20mount%20report%20intern.pdf" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Report
+            </a>
+          </div>
         </div>
-        <div class="project-card">
-          <h3 class="project-title">Suspension &amp; Steering System (Electric ATV)</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
-        </div>
-        <div class="project-card">
-          <h3 class="project-title">Reaction Wheel Attitude Control System for Nanosatellites</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
-        </div>
-      </div>
 
-      <p class="subsection-label reveal">CAD models — interactive</p>
-      <!--
-        To make a tile interactive once you have a .glb/.gltf model:
-        1) Add this once in <head>, just before </head>:
-           <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        2) Replace an .empty-tile div below with:
-           <model-viewer src="Project 1/model1.glb" alt="Model 1" camera-controls disable-zoom
-             style="width:100%; aspect-ratio:4/3; background:var(--bg-alt); border-radius:var(--radius);">
-           </model-viewer>
-        camera-controls + disable-zoom gives mouse-drag rotation only, no scroll-zoom.
-      -->
-      <div class="tile-grid reveal">
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v9"/></svg>
-          <span class="slot">Model 1</span>
-          <span class="note">Add name &amp; caption here</span>
+        <div class="project-card">
+          <h3 class="project-title">Four-Post Rig Ride Simulation</h3>
+          <p class="project-desc">Add description here.</p>
+          <div class="project-tools"><span>Add tools here</span></div>
+          <div class="project-video">
+            <video src="videos/fourpost_rig.mp4" autoplay muted loop playsinline controls></video>
+          </div>
         </div>
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v9"/></svg>
-          <span class="slot">Model 2</span>
-          <span class="note">Add name &amp; caption here</span>
-        </div>
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v9"/></svg>
-          <span class="slot">Model 3</span>
-          <span class="note">Add name &amp; caption here</span>
-        </div>
-      </div>
 
-      <p class="subsection-label reveal">Simulation previews</p>
-      <!--
-        To fill a tile once you have a video file:
-        Replace an .empty-tile div below with:
-        <video src="Project 1/sim1.mp4" controls playsinline
-          style="width:100%; aspect-ratio:4/3; background:#000; border-radius:var(--radius); object-fit:cover;">
-        </video>
-      -->
-      <div class="tile-grid reveal">
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span class="slot">Simulation 1</span>
-          <span class="note">Add name &amp; caption here</span>
+        <div class="project-card">
+          <h3 class="project-title">Sinusoidal Ride Analysis</h3>
+          <p class="project-desc">Add description here.</p>
+          <div class="project-tools"><span>Add tools here</span></div>
+          <div class="project-video">
+            <video src="videos/sinusoidal_ride.mp4" autoplay muted loop playsinline controls></video>
+          </div>
         </div>
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span class="slot">Simulation 2</span>
-          <span class="note">Add name &amp; caption here</span>
-        </div>
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span class="slot">Simulation 3</span>
-          <span class="note">Add name &amp; caption here</span>
-        </div>
-        <div class="empty-tile">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span class="slot">Simulation 4</span>
-          <span class="note">Add name &amp; caption here</span>
-        </div>
+
       </div>
     </div>
   </section>
+
 
   <!-- ============ Approach ============ -->
   <section id="approach">
