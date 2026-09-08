@@ -293,8 +293,9 @@
     width:100%; aspect-ratio:4/3; background:var(--bg-raised);
     border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
   }
+  .project-video{aspect-ratio:21/9;}
   .project-card model-viewer{width:100%; height:100%;}
-  .project-video video{width:100%; height:100%; object-fit:cover; display:block;}
+  .project-video video{width:100%; height:100%; object-fit:contain; display:block;}
   .project-card .project-video{margin-top:16px;}
   @media (max-width:720px){
     .project-card.featured{grid-template-columns:1fr;}
