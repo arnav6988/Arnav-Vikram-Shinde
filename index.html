@@ -301,6 +301,48 @@
     .project-card.featured{grid-template-columns:1fr;}
   }
 
+  /* ============ Portfolio sub-tabs ============ */
+  .portfolio-tabs{
+    display:flex; flex-wrap:wrap; gap:10px; margin:28px 0 32px 0;
+  }
+  .portfolio-tab{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--text-dim); background:var(--bg-alt); border:1px solid var(--border);
+    border-radius:var(--radius); padding:9px 16px; cursor:pointer;
+    transition:border-color .2s ease, color .2s ease; -webkit-appearance:none; appearance:none;
+  }
+  .portfolio-tab:hover{color:var(--text); border-color:var(--text-mute);}
+  .portfolio-tab.active{color:var(--accent); border-color:var(--accent);}
+
+  .portfolio-panel{display:none;}
+  .portfolio-panel.active{display:block;}
+
+  .media-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px;
+  }
+  .media-card{
+    border:1px solid var(--border); background:var(--bg-alt); border-radius:var(--radius);
+    padding:20px; scroll-margin-top:calc(var(--nav-h) + 24px);
+    transition:border-color .5s ease, box-shadow .5s ease;
+  }
+  .media-card.highlight{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .media-card .project-model, .media-card .project-video{aspect-ratio:16/10;}
+  .media-card .project-video{aspect-ratio:16/9;}
+
+  /* Cap column width so a lone card (e.g. a single CAD model) doesn't
+     stretch to the full grid width — keeps it the same size as a
+     card in a multi-item row like the Videos panel. */
+  .portfolio-panel[data-panel="cad"] .media-grid{
+    grid-template-columns:repeat(auto-fit, minmax(300px, 320px));
+  }
+
+  .extras-group + .extras-group{margin-top:8px;}
+
+  button.project-link{
+    font:inherit; font-family:var(--font-mono); background:var(--bg-alt);
+    cursor:pointer; -webkit-appearance:none; appearance:none;
+  }
+
   /* ============ Approach ============ */
   .approach-sub{
     font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent);
@@ -510,94 +552,206 @@
     <div class="wrap">
       <h2 class="section-title reveal">Portfolio</h2>
 
-      <div class="project-grid reveal">
+      <div class="portfolio-tabs reveal" role="tablist" aria-label="Portfolio categories">
+        <button class="portfolio-tab active" type="button" data-tab="projects" role="tab" aria-selected="true">Projects</button>
+        <button class="portfolio-tab" type="button" data-tab="cad" role="tab" aria-selected="false">CAD Models</button>
+        <button class="portfolio-tab" type="button" data-tab="videos" role="tab" aria-selected="false">Videos</button>
+        <button class="portfolio-tab" type="button" data-tab="reports" role="tab" aria-selected="false">Reports</button>
+        <button class="portfolio-tab" type="button" data-tab="extras" role="tab" aria-selected="false">Extras</button>
+      </div>
 
-        <div class="project-card featured">
-          <div>
+      <!-- ============ Projects panel ============ -->
+      <div class="portfolio-panel active" data-panel="projects">
+        <div class="project-grid reveal">
+
+          <div class="project-card">
             <h3 class="project-title">Reaction Wheel Attitude Control System — Nanosatellite</h3>
             <p class="project-desc">Designed and sized a reaction-wheel-based Attitude Control System (ACS) for a nanosatellite platform, covering the mechanical/CAD layout of the wheel assembly alongside the supporting momentum and control analysis. Full write-up in the linked project report.</p>
             <div class="project-tools">
               <span>CAD</span><span>Attitude Control</span><span>Nanosatellite</span><span>Mechanical Design</span>
             </div>
             <div class="project-links">
-              <a class="project-link" href="reports/Minor%20Project%20Report%20(RWACS).pdf" target="_blank" rel="noopener noreferrer">
+              <button class="project-link media-jump" type="button" data-target="cad" data-anchor="cad-reaction-wheel">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                View CAD Model
+              </button>
+              <button class="project-link media-jump" type="button" data-target="videos" data-anchor="video-three-motors">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Watch Test Video
+              </button>
+              <button class="project-link media-jump" type="button" data-target="reports" data-anchor="extra-rwacs-report">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Report
+                View Report
+              </button>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">CMP Lens Polishing Simulator</h3>
+            <p class="project-desc">Physics-based kinematic simulator for a CMP lens-polishing machine — models the oscillating arm as a four-bar mechanism, derives induced disc RPM and profile geometry, and applies Preston's equation for material-removal prediction.</p>
+            <div class="project-tools">
+              <span>HTML/JS</span><span>Kinematics</span><span>Preston's Equation</span>
+            </div>
+            <div class="project-links">
+              <a class="project-link" href="cmp-simulator.html" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Launch Simulator
               </a>
             </div>
           </div>
-          <div class="media-stack">
-            <div>
-              <p class="media-label">3D Model</p>
-              <div class="project-model">
-                <model-viewer src="models/reaction-wheel.glb" alt="Reaction Wheel Attitude Control System 3D model" camera-controls disable-zoom auto-rotate shadow-intensity="0.6"></model-viewer>
+
+          <div class="project-card">
+            <h3 class="project-title">Optomechanical Mirror Assembly</h3>
+            <p class="project-desc">Structural analysis of a mirror mount assembly using ANSYS FEA, documented in a full structural analysis report built from the simulation data.</p>
+            <div class="project-tools">
+              <span>ANSYS</span><span>Static Structural</span><span>Optomechanics</span>
+            </div>
+            <div class="project-links">
+              <button class="project-link media-jump" type="button" data-target="reports" data-anchor="extra-mirror-report">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                View Report
+              </button>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Four-Post Rig Ride Simulation</h3>
+            <p class="project-desc">Add description here.</p>
+            <div class="project-tools"><span>Add tools here</span></div>
+            <div class="project-links">
+              <button class="project-link media-jump" type="button" data-target="videos" data-anchor="video-fourpost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Watch Video
+              </button>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Sinusoidal Ride Analysis</h3>
+            <p class="project-desc">Add description here.</p>
+            <div class="project-tools"><span>Add tools here</span></div>
+            <div class="project-links">
+              <button class="project-link media-jump" type="button" data-target="videos" data-anchor="video-sinusoidal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Watch Video
+              </button>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Multi-Stage Gear Train Dynamics</h3>
+            <p class="project-desc">Developed and evaluated a multi-stage gear train model in MSC Adams to study its dynamic behavior under operating conditions. The multibody dynamic simulation incorporated gear-to-gear contact interactions and rotational motion to evaluate torque transmission, contact forces, and transient response throughout the gear mesh. Time-history results of transmitted contact torque were analyzed to assess load fluctuations, gear engagement behavior, and overall drivetrain performance.</p>
+            <div class="project-tools"><span>MBD</span><span>MSC Adams</span></div>
+            <div class="project-links">
+              <button class="project-link media-jump" type="button" data-target="videos" data-anchor="video-gearbox">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Watch Video
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ CAD Models panel ============ -->
+      <div class="portfolio-panel" data-panel="cad">
+        <div class="media-grid reveal">
+
+          <div class="media-card" id="cad-reaction-wheel">
+            <p class="media-label">Reaction Wheel ACS — 3D Model</p>
+            <div class="project-model">
+              <model-viewer src="models/reaction-wheel.glb" alt="Reaction Wheel Attitude Control System 3D model" camera-controls disable-zoom auto-rotate shadow-intensity="0.6"></model-viewer>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Videos panel ============ -->
+      <div class="portfolio-panel" data-panel="videos">
+        <div class="media-grid reveal">
+
+          <div class="media-card" id="video-three-motors">
+            <p class="media-label">Reaction Wheel ACS — Test Video</p>
+            <div class="project-video">
+              <video src="videos/three_motors.mp4" autoplay muted loop playsinline controls></video>
+            </div>
+          </div>
+
+          <div class="media-card" id="video-fourpost">
+            <p class="media-label">Four-Post Rig Ride Simulation</p>
+            <div class="project-video">
+              <video src="videos/fourpost_rig.mp4" autoplay muted loop playsinline controls></video>
+            </div>
+          </div>
+
+          <div class="media-card" id="video-sinusoidal">
+            <p class="media-label">Sinusoidal Ride Analysis</p>
+            <div class="project-video">
+              <video src="videos/sinusoidal_ride.mp4" autoplay muted loop playsinline controls></video>
+            </div>
+          </div>
+
+          <div class="media-card" id="video-gearbox">
+            <p class="media-label">Multi-Stage Gear Train Dynamics</p>
+            <div class="project-video">
+              <video src="videos/gearbox.mp4" autoplay muted loop playsinline controls></video>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Reports panel ============ -->
+      <div class="portfolio-panel" data-panel="reports">
+        <div class="project-grid reveal">
+
+          <div class="project-card media-card" id="extra-rwacs-report">
+            <h3 class="project-title">Reaction Wheel ACS — Project Report</h3>
+            <p class="project-desc">Full design and analysis write-up for the nanosatellite reaction-wheel attitude control system.</p>
+            <div class="project-links">
+              <a class="project-link" href="reports/Minor%20Project%20Report%20(RWACS).pdf" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Open PDF
+              </a>
+            </div>
+          </div>
+
+          <div class="project-card media-card" id="extra-mirror-report">
+            <h3 class="project-title">Optomechanical Mirror Assembly — Structural Report</h3>
+            <p class="project-desc">ANSYS static structural analysis report for the mirror mount assembly.</p>
+            <div class="project-links">
+              <a class="project-link" href="reports/final%20mirror%20mount%20report%20intern.pdf" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Open PDF
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ Extras panel ============ -->
+      <div class="portfolio-panel" data-panel="extras">
+
+        <div class="extras-group reveal">
+          <p class="subsection-label">Interactive Tools</p>
+          <div class="project-grid">
+            <div class="project-card">
+              <h3 class="project-title">CMP Lens Polishing Simulator</h3>
+              <p class="project-desc">Browser-based kinematic simulator — launch it to explore the four-bar mechanism model interactively.</p>
+              <div class="project-links">
+                <a class="project-link" href="cmp-simulator.html" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  Launch Simulator
+                </a>
               </div>
             </div>
-            <div>
-              <p class="media-label">Test Video</p>
-              <div class="project-video">
-                <video src="videos/three_motors.mp4" autoplay muted loop playsinline controls></video>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <h3 class="project-title">CMP Lens Polishing Simulator</h3>
-          <p class="project-desc">Physics-based kinematic simulator for a CMP lens-polishing machine — models the oscillating arm as a four-bar mechanism, derives induced disc RPM and profile geometry, and applies Preston's equation for material-removal prediction.</p>
-          <div class="project-tools">
-            <span>HTML/JS</span><span>Kinematics</span><span>Preston's Equation</span>
-          </div>
-          <div class="project-links">
-            <a class="project-link" href="cmp-simulator.html" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Launch Simulator
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <h3 class="project-title">Optomechanical Mirror Assembly</h3>
-          <p class="project-desc">Structural analysis of a mirror mount assembly using ANSYS FEA, documented in a full structural analysis report built from the simulation data.</p>
-          <div class="project-tools">
-            <span>ANSYS</span><span>Static Structural</span><span>Optomechanics</span>
-          </div>
-          <div class="project-links">
-            <a class="project-link" href="reports/final%20mirror%20mount%20report%20intern.pdf" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Report
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <h3 class="project-title">Four-Post Rig Ride Simulation</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
-          <div class="project-video">
-            <video src="videos/fourpost_rig.mp4" autoplay muted loop playsinline controls></video>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <h3 class="project-title">Sinusoidal Ride Analysis</h3>
-          <p class="project-desc">Add description here.</p>
-          <div class="project-tools"><span>Add tools here</span></div>
-          <div class="project-video">
-            <video src="videos/sinusoidal_ride.mp4" autoplay muted loop playsinline controls></video>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <h3 class="project-title">Multi-Stage Gear Train Dynamics</h3>
-          <p class="project-desc">Developed and evaluated a multi-stage gear train model in MSC Adams to study its dynamic behavior under operating conditions. The multibody dynamic simulation incorporated gear-to-gear contact interactions and rotational motion to evaluate torque transmission, contact forces, and transient response throughout the gear mesh. Time-history results of transmitted contact torque were analyzed to assess load fluctuations, gear engagement behavior, and overall drivetrain performance.</p>
-          <div class="project-tools"><span>MBD</span><span>MSC Adams</span></div>
-          <div class="project-video">
-            <video src="videos/gearbox.mp4" autoplay muted loop playsinline controls></video>
           </div>
         </div>
 
       </div>
+
     </div>
   </section>
 
@@ -716,6 +870,43 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       items.forEach(function(el){ io.observe(el); });
     }
+
+    // ============ Portfolio sub-tabs ============
+    var portfolioTabs   = document.querySelectorAll('.portfolio-tab');
+    var portfolioPanels = document.querySelectorAll('.portfolio-panel');
+
+    function activatePortfolioTab(tabName, anchorId){
+      portfolioTabs.forEach(function(btn){
+        var isActive = btn.getAttribute('data-tab') === tabName;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      portfolioPanels.forEach(function(panel){
+        panel.classList.toggle('active', panel.getAttribute('data-panel') === tabName);
+      });
+      if (anchorId) {
+        var target = document.getElementById(anchorId);
+        if (target) {
+          requestAnimationFrame(function(){
+            target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+            target.classList.add('highlight');
+            setTimeout(function(){ target.classList.remove('highlight'); }, 1800);
+          });
+        }
+      }
+    }
+
+    portfolioTabs.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        activatePortfolioTab(btn.getAttribute('data-tab'));
+      });
+    });
+
+    document.querySelectorAll('.media-jump').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        activatePortfolioTab(btn.getAttribute('data-target'), btn.getAttribute('data-anchor'));
+      });
+    });
 
     // ============ Background four-bar mechanism (scroll-driven) ============
     // Crank-rocker linkage, closed-form vector-loop position analysis.
