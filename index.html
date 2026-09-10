@@ -338,6 +338,58 @@
 
   .extras-group + .extras-group{margin-top:8px;}
 
+  /* ============ In-page PDF viewer (view-only, no download/print UI) ============ */
+  .pdf-viewer-overlay{
+    position:fixed; inset:0; z-index:9999; display:none;
+    align-items:center; justify-content:center;
+    background:rgba(3,5,7,0.88); padding:24px;
+  }
+  .pdf-viewer-overlay.active{display:flex;}
+  .pdf-viewer-box{
+    width:100%; max-width:920px; max-height:92vh;
+    background:var(--bg-raised); border:1px solid var(--border); border-radius:8px;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .pdf-viewer-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 18px; border-bottom:1px solid var(--border);
+  }
+  .pdf-viewer-title{font-family:var(--font-mono); font-size:13px; color:var(--text); letter-spacing:.02em;}
+  .pdf-viewer-close{
+    background:none; border:none; color:var(--text-dim); font-size:22px; line-height:1;
+    cursor:pointer; padding:2px 6px;
+  }
+  .pdf-viewer-close:hover{color:var(--accent);}
+  .pdf-viewer-canvas-wrap{
+    flex:1; min-height:0; overflow:auto; background:var(--bg);
+    display:flex; align-items:flex-start; justify-content:center; padding:18px;
+  }
+  .pdf-viewer-canvas-wrap canvas{
+    max-width:100%; height:auto; box-shadow:0 0 0 1px var(--border);
+    user-select:none; -webkit-user-drag:none; pointer-events:none;
+  }
+  .pdf-viewer-nav{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    padding:12px; border-top:1px solid var(--border);
+    font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+  }
+  .pdf-viewer-nav button{
+    background:var(--bg-alt); border:1px solid var(--border); color:var(--text);
+    font-family:var(--font-mono); font-size:12px; padding:6px 14px; border-radius:4px; cursor:pointer;
+  }
+  .pdf-viewer-nav button:hover:not(:disabled){border-color:var(--accent); color:var(--accent);}
+  .pdf-viewer-nav button:disabled{opacity:.35; cursor:default;}
+  .pdf-viewer-status{font-family:var(--font-mono); font-size:12px; color:var(--text-mute); padding:14px 18px;}
+  @media print{
+    body::before{
+      content:"Printing is disabled for this content."; display:block;
+      position:fixed; inset:0; background:#fff; color:#000; z-index:99999;
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+    }
+    body > *{display:none !important;}
+    body::before{display:flex !important;}
+  }
+
   button.project-link{
     font:inherit; font-family:var(--font-mono); background:var(--bg-alt);
     cursor:pointer; -webkit-appearance:none; appearance:none;
@@ -668,7 +720,7 @@
           <div class="media-card" id="cad-reaction-wheel">
             <p class="media-label">Reaction Wheel ACS — 3D Model</p>
             <div class="project-model">
-              <model-viewer src="models/reaction-wheel.glb" alt="Reaction Wheel Attitude Control System 3D model" camera-controls disable-zoom auto-rotate shadow-intensity="0.6"></model-viewer>
+              <model-viewer src="models/reaction-wheel.glb" alt="Reaction Wheel Attitude Control System 3D model" camera-controls disable-zoom auto-rotate shadow-intensity="0.6" oncontextmenu="return false;"></model-viewer>
             </div>
           </div>
 
@@ -682,28 +734,28 @@
           <div class="media-card" id="video-three-motors">
             <p class="media-label">Reaction Wheel ACS — Test Video</p>
             <div class="project-video">
-              <video src="videos/three_motors.mp4" autoplay muted loop playsinline controls></video>
+              <video src="videos/three_motors.mp4" autoplay muted loop playsinline controls controlsList="nodownload noremoteplayback" disablePictureInPicture oncontextmenu="return false;"></video>
             </div>
           </div>
 
           <div class="media-card" id="video-fourpost">
             <p class="media-label">Four-Post Rig Ride Simulation</p>
             <div class="project-video">
-              <video src="videos/fourpost_rig.mp4" autoplay muted loop playsinline controls></video>
+              <video src="videos/fourpost_rig.mp4" autoplay muted loop playsinline controls controlsList="nodownload noremoteplayback" disablePictureInPicture oncontextmenu="return false;"></video>
             </div>
           </div>
 
           <div class="media-card" id="video-sinusoidal">
             <p class="media-label">Sinusoidal Ride Analysis</p>
             <div class="project-video">
-              <video src="videos/sinusoidal_ride.mp4" autoplay muted loop playsinline controls></video>
+              <video src="videos/sinusoidal_ride.mp4" autoplay muted loop playsinline controls controlsList="nodownload noremoteplayback" disablePictureInPicture oncontextmenu="return false;"></video>
             </div>
           </div>
 
           <div class="media-card" id="video-gearbox">
             <p class="media-label">Multi-Stage Gear Train Dynamics</p>
             <div class="project-video">
-              <video src="videos/gearbox.mp4" autoplay muted loop playsinline controls></video>
+              <video src="videos/gearbox.mp4" autoplay muted loop playsinline controls controlsList="nodownload noremoteplayback" disablePictureInPicture oncontextmenu="return false;"></video>
             </div>
           </div>
 
@@ -718,10 +770,10 @@
             <h3 class="project-title">Reaction Wheel ACS — Project Report</h3>
             <p class="project-desc">Full design and analysis write-up for the nanosatellite reaction-wheel attitude control system.</p>
             <div class="project-links">
-              <a class="project-link" href="reports/Minor%20Project%20Report%20(RWACS).pdf" target="_blank" rel="noopener noreferrer">
+              <button type="button" class="project-link" onclick="openPdfViewer('reports/Minor%20Project%20Report%20(RWACS).pdf','Reaction Wheel ACS — Project Report')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Open PDF
-              </a>
+                View Report
+              </button>
             </div>
           </div>
 
@@ -729,10 +781,10 @@
             <h3 class="project-title">Optomechanical Mirror Assembly — Structural Report</h3>
             <p class="project-desc">ANSYS static structural analysis report for the mirror mount assembly.</p>
             <div class="project-links">
-              <a class="project-link" href="reports/final%20mirror%20mount%20report%20intern.pdf" target="_blank" rel="noopener noreferrer">
+              <button type="button" class="project-link" onclick="openPdfViewer('reports/final%20mirror%20mount%20report%20intern.pdf','Optomechanical Mirror Assembly — Structural Report')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Open PDF
-              </a>
+                View Report
+              </button>
             </div>
           </div>
 
@@ -740,10 +792,10 @@
             <h3 class="project-title">Baja Vehicle — Design Report &amp; DFMEA</h3>
             <p class="project-desc">Complete design report and Design Failure Mode and Effects Analysis (DFMEA) for the Baja off-road vehicle, covering subsystem design rationale, risk assessment, and failure-mode mitigation.</p>
             <div class="project-links">
-              <a class="project-link" href="reports/Design%20Report%20%2B%20DFMEA%20BAJA.pdf" target="_blank" rel="noopener noreferrer">
+              <button type="button" class="project-link" onclick="openPdfViewer('reports/Design%20Report%20%2B%20DFMEA%20BAJA.pdf','Baja Vehicle — Design Report &amp; DFMEA')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Open PDF
-              </a>
+                View Report
+              </button>
             </div>
           </div>
 
@@ -993,6 +1045,138 @@
       }, { passive: true });
     }
   })();
+</script>
+
+<!-- ============ In-page PDF viewer (view-only) ============ -->
+<div id="pdfViewerOverlay" class="pdf-viewer-overlay" aria-hidden="true" oncontextmenu="return false;">
+  <div class="pdf-viewer-box">
+    <div class="pdf-viewer-header">
+      <span id="pdfViewerTitle" class="pdf-viewer-title mono">DOCUMENT</span>
+      <button type="button" class="pdf-viewer-close" onclick="closePdfViewer()" aria-label="Close viewer">&times;</button>
+    </div>
+    <div class="pdf-viewer-canvas-wrap" oncontextmenu="return false;">
+      <canvas id="pdfViewerCanvas" oncontextmenu="return false;"></canvas>
+    </div>
+    <div id="pdfViewerStatus" class="pdf-viewer-status" style="display:none;"></div>
+    <div class="pdf-viewer-nav">
+      <button type="button" id="pdfPrevBtn" onclick="pdfPrevPage()">&larr; Prev</button>
+      <span id="pdfPageIndicator">Page 1 / 1</span>
+      <button type="button" id="pdfNextBtn" onclick="pdfNextPage()">Next &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Lightweight canvas-based PDF viewer — renders pages to <canvas> only,
+  // no text layer, no download/print control exposed in the UI.
+  (function(){
+    var pdfDoc = null, pageNum = 1, pageCount = 0, canvas, ctx;
+    var libLoading = null;
+
+    function loadPdfJs(){
+      if (window.pdfjsLib) return Promise.resolve();
+      if (libLoading) return libLoading;
+      libLoading = new Promise(function(resolve, reject){
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+        s.onload = function(){
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+          resolve();
+        };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      return libLoading;
+    }
+
+    function setStatus(msg){
+      var el = document.getElementById('pdfViewerStatus');
+      if (msg){ el.textContent = msg; el.style.display = 'block'; }
+      else { el.style.display = 'none'; }
+    }
+
+    function renderPage(num){
+      setStatus('Loading page…');
+      pdfDoc.getPage(num).then(function(page){
+        var wrap = document.querySelector('.pdf-viewer-canvas-wrap');
+        var targetWidth = Math.min(wrap.clientWidth - 4, 860);
+        var baseViewport = page.getViewport({ scale: 1 });
+        var scale = targetWidth / baseViewport.width;
+        var viewport = page.getViewport({ scale: scale });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function(){
+          setStatus(null);
+        });
+        document.getElementById('pdfPageIndicator').textContent = 'Page ' + num + ' / ' + pageCount;
+        document.getElementById('pdfPrevBtn').disabled = (num <= 1);
+        document.getElementById('pdfNextBtn').disabled = (num >= pageCount);
+      });
+    }
+
+    window.openPdfViewer = function(url, title){
+      canvas = document.getElementById('pdfViewerCanvas');
+      ctx = canvas.getContext('2d');
+      document.getElementById('pdfViewerTitle').textContent = title || 'Document';
+      document.getElementById('pdfViewerOverlay').classList.add('active');
+      document.getElementById('pdfViewerOverlay').setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setStatus('Loading document…');
+      loadPdfJs().then(function(){
+        return window.pdfjsLib.getDocument(url).promise;
+      }).then(function(doc){
+        pdfDoc = doc;
+        pageCount = doc.numPages;
+        pageNum = 1;
+        renderPage(pageNum);
+      }).catch(function(){
+        setStatus('Unable to load this document right now.');
+      });
+    };
+
+    window.closePdfViewer = function(){
+      document.getElementById('pdfViewerOverlay').classList.remove('active');
+      document.getElementById('pdfViewerOverlay').setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      pdfDoc = null;
+    };
+
+    window.pdfPrevPage = function(){ if (pdfDoc && pageNum > 1){ pageNum--; renderPage(pageNum); } };
+    window.pdfNextPage = function(){ if (pdfDoc && pageNum < pageCount){ pageNum++; renderPage(pageNum); } };
+
+    document.getElementById('pdfViewerOverlay').addEventListener('click', function(e){
+      if (e.target === this) window.closePdfViewer();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') window.closePdfViewer();
+    });
+  })();
+
+  // Site-wide light-touch deterrents: block the casual right-click save,
+  // and block dragging media/canvas out of the page. These stop the
+  // one-click download path for ordinary visitors — they do not (and
+  // cannot) stop someone using browser devtools.
+  document.addEventListener('contextmenu', function(e){
+    var el = e.target;
+    if (el.closest && (el.closest('video') || el.closest('model-viewer') || el.closest('.pdf-viewer-canvas-wrap'))){
+      e.preventDefault();
+    }
+  });
+  document.addEventListener('dragstart', function(e){
+    var el = e.target;
+    if (el.closest && (el.closest('video') || el.closest('model-viewer') || el.closest('canvas'))){
+      e.preventDefault();
+    }
+  });
+
+  // Block the common keyboard shortcuts for saving/printing/viewing source.
+  // Deterrent only — devtools and the browser's own menus still work.
+  document.addEventListener('keydown', function(e){
+    var k = (e.key || '').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && (k === 's' || k === 'p' || k === 'u')){
+      e.preventDefault();
+    }
+  });
 </script>
 
 </body>
