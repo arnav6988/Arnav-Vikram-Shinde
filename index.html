@@ -399,6 +399,17 @@
   .pdf-viewer-nav button:hover:not(:disabled){border-color:var(--accent); color:var(--accent);}
   .pdf-viewer-nav button:disabled{opacity:.35; cursor:default;}
   .pdf-viewer-status{font-family:var(--font-mono); font-size:12px; color:var(--text-mute); padding:14px 18px;}
+  .pdf-viewer-page-jump{
+    display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--text-dim);
+  }
+  .pdf-viewer-page-jump input{
+    width:44px; text-align:center; font-family:var(--font-mono); font-size:13px;
+    background:var(--bg-alt); color:var(--text); border:1px solid var(--border);
+    border-radius:4px; padding:4px 2px; -moz-appearance:textfield;
+  }
+  .pdf-viewer-page-jump input::-webkit-outer-spin-button,
+  .pdf-viewer-page-jump input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+  .pdf-viewer-page-jump input:focus{outline:none; border-color:var(--accent);}
   @media print{
     body::before{
       content:"Printing is disabled for this content."; display:block;
@@ -1113,7 +1124,10 @@
     <div id="pdfViewerStatus" class="pdf-viewer-status" style="display:none;"></div>
     <div class="pdf-viewer-nav">
       <button type="button" id="pdfPrevBtn" onclick="pdfPrevPage()">&larr; Prev</button>
-      <span id="pdfPageIndicator">Page 1 / 1</span>
+      <span class="pdf-viewer-page-jump mono">Page
+        <input type="number" id="pdfPageInput" min="1" value="1" inputmode="numeric" aria-label="Jump to page">
+        / <span id="pdfPageCount">1</span>
+      </span>
       <button type="button" id="pdfNextBtn" onclick="pdfNextPage()">Next &rarr;</button>
     </div>
   </div>
@@ -1161,7 +1175,8 @@
         page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function(){
           setStatus(null);
         });
-        document.getElementById('pdfPageIndicator').textContent = 'Page ' + num + ' / ' + pageCount;
+        document.getElementById('pdfPageInput').value = num;
+        document.getElementById('pdfPageCount').textContent = pageCount;
         document.getElementById('pdfPrevBtn').disabled = (num <= 1);
         document.getElementById('pdfNextBtn').disabled = (num >= pageCount);
       });
@@ -1181,6 +1196,9 @@
         pdfDoc = doc;
         pageCount = doc.numPages;
         pageNum = 1;
+        var input = document.getElementById('pdfPageInput');
+        input.max = pageCount;
+        document.getElementById('pdfPageCount').textContent = pageCount;
         renderPage(pageNum);
       }).catch(function(){
         setStatus('Unable to load this document right now.');
@@ -1196,6 +1214,22 @@
 
     window.pdfPrevPage = function(){ if (pdfDoc && pageNum > 1){ pageNum--; renderPage(pageNum); } };
     window.pdfNextPage = function(){ if (pdfDoc && pageNum < pageCount){ pageNum++; renderPage(pageNum); } };
+
+    function jumpToTypedPage(){
+      if (!pdfDoc) return;
+      var input = document.getElementById('pdfPageInput');
+      var target = parseInt(input.value, 10);
+      if (isNaN(target)){ input.value = pageNum; return; }
+      target = Math.max(1, Math.min(pageCount, target));
+      pageNum = target;
+      renderPage(pageNum);
+    }
+
+    document.getElementById('pdfPageInput').addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){ e.preventDefault(); this.blur(); jumpToTypedPage(); }
+    });
+    document.getElementById('pdfPageInput').addEventListener('blur', jumpToTypedPage);
+    document.getElementById('pdfPageInput').addEventListener('click', function(e){ e.stopPropagation(); this.select(); });
 
     document.getElementById('pdfViewerOverlay').addEventListener('click', function(e){
       if (e.target === this) window.closePdfViewer();
